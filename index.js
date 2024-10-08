@@ -7,11 +7,12 @@ const mergedConfig = Object.assign({}, puppeteerConfig, {
 });
 
 const launchOptions = {
-    headless: false,
+    headless: "new",
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu' ],
     ...mergedConfig,
-    timeout: 360000,
+    timeout: 30000,
     defaultViewport: null,
-    protocolTimeout: 720000,
+    protocolTimeout: 72000,
 };
 
 const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
@@ -52,7 +53,6 @@ const runAutomation = async (action) => {
                     console.log('Botón de confirmación de pausa clicado');
                     await delay(4000); // Espera 4 segundos
 
-
                 } else {
                     console.error('No se encontró el botón de confirmación de pausa');
                 }
@@ -63,13 +63,23 @@ const runAutomation = async (action) => {
             const resumeButtonBlue = await page.$(resumeSelectorBlue);
             const resumeButtonGray = await page.$(resumeSelectorGray);
             if (resumeButtonBlue) {
-                await resumeButtonBlue.click();
-                console.log('Botón de reanudar (azul) clicado');
-                await delay(3000); // Espera 2 segundos
+                try {
+                    await resumeButtonBlue.click();
+                    console.log('Botón de reanudar (azul) clicado');
+                    await delay(3000); // Espera 3 segundos
+                } catch (error) {
+                    console.error('Error al clicar en el botón de reanudar (azul) o no esta pausado el servicio:', error);
+                }
+
             } else if (resumeButtonGray) {
-                await resumeButtonGray.click();
-                console.log('Botón de reanudar (gris) clicado');
-                await delay(3000); // Espera 2 segundos
+                try {
+                    await resumeButtonGray.click();
+                    console.log('Botón de reanudar (gris) clicado');
+                    await delay(3000); // Espera 3 segundos
+                } catch (error) {
+                    console.error('Error al clicar en el botón de reanudar (gris) o no esta pausado el servicio:', error);
+                }
+
             } else {
                 console.error('No se encontró ningún botón de resume');
             }
@@ -87,9 +97,31 @@ const runAutomation = async (action) => {
 
 const webhookHandler = (req, res) => {
     const action = req.query.action;
+    let responded = false;
+
+    // Set a timeout to send a 3xx response after 25 seconds
+    const timeout = setTimeout(() => {
+        if (!responded) {
+            res.redirect(307, '/path-to-continue-processing');
+            responded = true;
+        }
+    }, 25000);
+
     runAutomation(action)
-        .then(() => res.status(200).send(`Action '${action}' executed`))
-        .catch((error) => res.status(500).send(`Error executing action: ${error.message}`));
+        .then(() => {
+            if (!responded) {
+                clearTimeout(timeout);
+                res.status(200).send(`Action '${action}' executed`);
+                responded = true;
+            }
+        })
+        .catch((error) => {
+            if (!responded) {
+                clearTimeout(timeout);
+                res.status(500).send(`Error executing action: ${error.message}`);
+                responded = true;
+            }
+        });
 };
 
 module.exports = { webhookHandler };
