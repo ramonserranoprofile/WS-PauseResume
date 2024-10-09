@@ -48,7 +48,8 @@ RUN apt-get update \
 # WORKDIR /usr/src/app
 
 # Establece el directorio de trabajo en el contenedor
-WORKDIR /root
+# Establece el directorio de trabajo en el contenedor
+WORKDIR /usr/src/app
 
 # Copia los archivos de tu proyecto al contenedor
 COPY package*.json ./

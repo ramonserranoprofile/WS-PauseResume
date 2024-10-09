@@ -1,6 +1,7 @@
 const { join } = require('path');
 const puppeteer = require('puppeteer');
 const puppeteerConfig = require('./.puppeteerrc.cjs');
+const { timeout } = require('puppeteer');
 
 const mergedConfig = Object.assign({}, puppeteerConfig, {
     // Add other default options here if needed
@@ -10,9 +11,9 @@ const launchOptions = {
     headless: "new",
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
     ...mergedConfig,
-    timeout: 30000,
+    timeout: 180000,
     defaultViewport: null,
-    protocolTimeout: 72000,
+    protocolTimeout: 270000,
 };
 
 const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
@@ -23,7 +24,7 @@ const runAutomation = async (action) => {
 
     try {
         console.log("Iniciando ejecución del flujo automatizado");
-        await page.goto('https://app.koyeb.com/auth/signin?next=%2Fservices%2Fcdc0d08c-08ee-4a17-9f64-e635cca34e49%2Fsettings');
+        await page.goto('https://app.koyeb.com/auth/signin?next=%2Fservices%2Fcdc0d08c-08ee-4a17-9f64-e635cca34e49%2Fsettings', { waitUntil: 'networkidle2', timeout: 180000 });
 
         await page.type('input[name="email"]', 'ramonserrano76@gmail.com');
         await page.type('input[name="password"]', 'zcYRs6uzF8t#cXk');
@@ -105,7 +106,7 @@ const webhookHandler = (req, res) => {
             res.redirect(307, '/path-to-continue-processing');
             responded = true;
         }
-    }, 25000);
+    }, 120000);
 
     runAutomation(action)
         .then(() => {
