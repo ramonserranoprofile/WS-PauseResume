@@ -8,7 +8,7 @@ const mergedConfig = Object.assign({}, puppeteerConfig, {
 
 const launchOptions = {
     headless: "new",
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu' ],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
     ...mergedConfig,
     timeout: 30000,
     defaultViewport: null,
@@ -23,7 +23,7 @@ const runAutomation = async (action) => {
 
     try {
         console.log("Iniciando ejecución del flujo automatizado");
-        await page.goto('https://app.koyeb.com/auth/signin?next=%2Fservices%2Fe1dbfa7b-ebf6-46b3-a64e-ba31285ca699%2Fsettings');
+        await page.goto('https://app.koyeb.com/auth/signin?next=%2Fservices%2Fcdc0d08c-08ee-4a17-9f64-e635cca34e49%2Fsettings');
 
         await page.type('input[name="email"]', 'ramonserrano76@gmail.com');
         await page.type('input[name="password"]', 'zcYRs6uzF8t#cXk');
@@ -43,7 +43,7 @@ const runAutomation = async (action) => {
                 await delay(2000); // Espera 2 segundos
 
                 await page.waitForSelector('input[name="confirmationText"]');
-                await page.type('input[name="confirmationText"]', 'calendly');
+                await page.type('input[name="confirmationText"]', 'devops');
                 await delay(3000); // Espera 3 segundos
 
                 const confirmPauseButtonSelector = 'button[type="submit"].bg-red.text-contrast-red';
