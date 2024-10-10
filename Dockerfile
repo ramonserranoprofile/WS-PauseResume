@@ -31,7 +31,7 @@ USER root
 
 # Actualiza los repositorios y systemd
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends sudo systemd procps \
+    && apt-get install -y --no-install-recommends sudo curl gnupg nano wget systemd procps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -63,15 +63,15 @@ COPY . .
 RUN npm cache clean --force \
     && npm install --cache /tmp/empty-cache --prefer-online
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 # Instalar libcap2-bin y otorgar permisos a nice
 RUN apt-get update && apt-get install -y libcap2-bin \
     && setcap cap_sys_nice=eip /usr/bin/nice
 # Expón el puerto en el que se ejecuta tu aplicación (ajusta según tu aplicación)
 EXPOSE 8080
 
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
 
 # Comando para iniciar la aplicación
-#CMD ["npm", "start"]
+CMD ["nice", "-n", "-10", "npm", "start"]
