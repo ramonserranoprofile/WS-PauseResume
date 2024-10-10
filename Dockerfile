@@ -49,20 +49,27 @@ RUN apt-get update \
 
 # Establece el directorio de trabajo en el contenedor
 # Establece el directorio de trabajo en el contenedor
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copia los archivos de tu proyecto al contenedor
 COPY package*.json ./
 COPY .puppeteerrc.cjs ./
+
 # Copia el resto de los archivos
+
 COPY . .
 
 # Instala las dependencias de la aplicación
 RUN npm cache clean --force \
     && npm install --cache /tmp/empty-cache --prefer-online
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]    
+
 # Expón el puerto en el que se ejecuta tu aplicación (ajusta según tu aplicación)
 EXPOSE 8080
 
 # Comando para iniciar la aplicación
-CMD ["nice", "-n", "-10", "npm", "start"]
+CMD ["npm", "start"]
