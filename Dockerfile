@@ -65,7 +65,9 @@ RUN npm cache clean --force \
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
+# Instalar libcap2-bin y otorgar permisos a nice
+RUN apt-get update && apt-get install -y libcap2-bin \
+    && setcap cap_sys_nice=eip /usr/bin/nice
 # Expón el puerto en el que se ejecuta tu aplicación (ajusta según tu aplicación)
 EXPOSE 8080
 
