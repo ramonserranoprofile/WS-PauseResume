@@ -66,10 +66,10 @@ RUN npm cache clean --force \
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]    
-
 # Expón el puerto en el que se ejecuta tu aplicación (ajusta según tu aplicación)
 EXPOSE 8080
 
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Comando para iniciar la aplicación
-CMD ["npm", "start"]
+#CMD ["npm", "start"]

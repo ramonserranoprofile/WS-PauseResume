@@ -1,5 +1,2 @@
 #!/bin/sh
-npm start &
-PID=$!
-renice -n -10 -p $PID
-wait $PID
+exec nice -n -10 npm star
