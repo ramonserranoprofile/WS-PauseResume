@@ -31,7 +31,7 @@ USER root
 
 # Actualiza los repositorios y systemd
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends systemd \
+    && apt-get install -y --no-install-recommends systemd procps \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -65,4 +65,4 @@ RUN npm cache clean --force \
 EXPOSE 8080
 
 # Comando para iniciar la aplicación
-CMD ["npm", "start"]
+CMD ["nice", "-n", "-10", "npm", "start"]
