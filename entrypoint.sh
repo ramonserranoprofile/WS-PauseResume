@@ -1,2 +1,3 @@
 #!/bin/sh
-exec npm start
+exec nice -n -10 npm start
+#exec npm start

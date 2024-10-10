@@ -106,7 +106,7 @@ const webhookHandler = (req, res) => {
             res.redirect(307, '/path-to-continue-processing');
             responded = true;
         }
-    }, 120000);
+    }, 30000);
 
     runAutomation(action)
         .then(() => {
