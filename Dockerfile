@@ -59,6 +59,9 @@ COPY .puppeteerrc.cjs ./
 
 COPY . .
 
+# Instala PM2 globalmente
+RUN npm install pm2 -g
+
 # Instala las dependencias de la aplicación
 RUN npm cache clean --force \
     && npm install --cache /tmp/empty-cache --prefer-online
@@ -74,4 +77,4 @@ EXPOSE 8080
 #ENTRYPOINT ["/entrypoint.sh"]
 
 # Comando para iniciar la aplicación
-CMD ["nice", "-n", "-10", "npm", "start"]
+CMD ["pm2-runtime", "start", "server.js", "--name", "WS-pauseresume", "--", "--max-old-space-size=4096"]

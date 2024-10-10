@@ -1,3 +1,3 @@
-#!/bin/sh
-exec nice -n -10 npm start
-#exec npm start
+#!/bin/bash
+renice -n -10 -p $$
+exec npm start
