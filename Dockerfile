@@ -72,9 +72,9 @@ RUN chmod +x /docker-entrypoint.sh
 RUN apt-get update && apt-get install -y libcap2-bin \
     && setcap cap_sys_nice=eip /usr/bin/nice
 # Expón el puerto en el que se ejecuta tu aplicación (ajusta según tu aplicación)
-EXPOSE 8080
+EXPOSE 8080 8090 10000
 
 #ENTRYPOINT ["/entrypoint.sh"]
 
-# Comando para iniciar la aplicación
-CMD ["pm2-runtime", "start", "server.js", "--name", "WS-pauseresume", "--", "--max-old-space-size=4096"]
+# Comando para iniciar la aplicación con PM2, alta prioridad y más memoria
+CMD ["taskset", "-c", "0", "nice", "-n", "-10", "pm2-runtime", "start", "server.js", "--name", "WS-pauseresume", "--", "--max-old-space-size=4096"]
