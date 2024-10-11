@@ -11,7 +11,7 @@ app.get('/path-to-continue-processing', (req, res) => {
     res.send('Continuando el procesamiento después de la redirección...');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
