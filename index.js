@@ -211,4 +211,4 @@ const webhookHandler = (req, res) => {
         });
 };
 
-export default { webhookHandler };
+export default webhookHandler;

@@ -19,7 +19,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start server.mjs --name 'ws-pauseresume' -- --max-old-space-size=4096 && pm2 set pm2:priority 10",
+    "start": "pm2 start server.js --name 'ws-pauseresume' -- --max-old-space-size=4096 && pm2 set pm2:priority 10",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
