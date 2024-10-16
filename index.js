@@ -127,7 +127,7 @@
 
 // module.exports = { webhookHandler };
 
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const pauseService = async () => {
     const response = await fetch('https://app.koyeb.com/v1/services/cdc0d08c-08ee-4a17-9f64-e635cca34e49/pause', {
