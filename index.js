@@ -208,4 +208,4 @@ const webhookHandler = (req, res) => {
         });
 };
 
-module.exports = { webhookHandler };
+export default { webhookHandler };
