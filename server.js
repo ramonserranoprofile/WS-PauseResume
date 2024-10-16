@@ -1,8 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { webhookHandler } from './webhookHandler.mjs';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const app = express();
-const { webhookHandler } = require('.');
-const dotenv = require('dotenv');
-dotenv.config()
 
 app.get('/', webhookHandler);
 
