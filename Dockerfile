@@ -77,4 +77,4 @@ EXPOSE 8080 8090 10000
 #ENTRYPOINT ["/entrypoint.sh"]
 
 # Comando para iniciar la aplicación con PM2, alta prioridad y más memoria
-CMD [“pm2-runtime”, “start”, “server.js”, “–name”, “WS-pauseresume”, “–”, “–max-old-space-size=4096”]
+CMD ["pm2-runtime", "start", "server.js", "--name", "WS-pauseresume", "--", "--max-old-space-size=4096"]

@@ -128,12 +128,15 @@
 // module.exports = { webhookHandler };
 
 import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const pauseService = async () => {
-    const response = await fetch('https://app.koyeb.com/v1/services/cdc0d08c-08ee-4a17-9f64-e635cca34e49/pause', {
+    const response = await fetch(`https://app.koyeb.com/v1/services/${process.env.SERVICE}/pause`, {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer {your_api_token}',
+            'Authorization': `Bearer ${process.env.API_TOKEN}`,
             'Content-Type': 'application/json'
         }
     });
@@ -146,10 +149,10 @@ const pauseService = async () => {
 };
 
 const resumeService = async () => {
-    const response = await fetch('https://app.koyeb.com/v1/services/cdc0d08c-08ee-4a17-9f64-e635cca34e49/resume', {
+    const response = await fetch(`https://app.koyeb.com/v1/services/${process.env.SERVICE}/resume`, {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer {your_api_token}',
+            'Authorization': `Bearer ${process.env.API_TOKEN}`,
             'Content-Type': 'application/json'
         }
     });

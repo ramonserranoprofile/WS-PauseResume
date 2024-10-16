@@ -1,5 +1,5 @@
 import express from 'express';
-import { webhookHandler } from './webhookHandler.mjs';
+import { webhookHandler } from './index.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
