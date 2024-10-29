@@ -131,7 +131,6 @@ import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const pauseService = async () => {
     const response = await fetch(`https://app.koyeb.com/v1/services/${process.env.SERVICE}/pause`, {
         method: 'POST',
@@ -164,6 +163,22 @@ const resumeService = async () => {
     }
 };
 
+const restartService = async () => {
+    const response = await fetch(`https://app.koyeb.com/v1/services/${process.env.SERVICE}/restart`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${process.env.API_TOKEN}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (response.ok) {
+        console.log('Servicio reiniciado exitosamente');
+    } else {
+        console.error('Error al reiniciar el servicio:', response.statusText);
+    }
+};
+
 const runAutomation = async (action) => {
     try {
         console.log("Iniciando ejecución del flujo automatizado");
@@ -172,6 +187,8 @@ const runAutomation = async (action) => {
             await pauseService();
         } else if (action === 'resume') {
             await resumeService();
+        } else if (action === 'restart') {
+            await restartService();
         } else {
             throw new Error('Acción inválida');
         }
