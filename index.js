@@ -164,7 +164,7 @@ const resumeService = async () => {
 };
 
 const restartService = async () => {
-    const response = await fetch(`https://app.koyeb.com/v1/services/${process.env.SERVICE}/restart`, {
+    const response = await fetch(`https://app.koyeb.com/v1/services/${process.env.SERVICE}/redeploy`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${process.env.API_TOKEN}`,
@@ -173,7 +173,7 @@ const restartService = async () => {
     });
 
     if (response.ok) {
-        console.log('Servicio reiniciado exitosamente');
+        console.log('Servicio reiniciado o refrescado exitosamente');
     } else {
         console.error('Error al reiniciar el servicio:', response.statusText);
     }
