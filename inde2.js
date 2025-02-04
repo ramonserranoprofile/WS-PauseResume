@@ -32,7 +32,7 @@ const runAutomation = async () => {
 
         // Configurar los datos de inicio de sesión
         const username = 'duran';
-        const password = 'Schloss!19!21';
+        const password = '123456';
 
         // Navegar a la página de inicio de sesión
         await page.goto('https://app.debevet.de/signin?cna=72416&redirect=dashboard');
